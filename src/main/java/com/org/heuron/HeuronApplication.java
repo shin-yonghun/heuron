@@ -1,0 +1,11 @@
+package com.org.heuron;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class HeuronApplication {
+    public static void main(String[] args){
+        SpringApplication.run(HeuronApplication.class, args);
+    }
+}

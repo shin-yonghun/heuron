@@ -1,0 +1,57 @@
+application:
+  timezone: Asia/Seoul
+  locale: ko
+
+server:
+  servlet:
+    context-path: /
+    jsp:
+      init-parameters:
+        listings: false
+  port: 8080
+  error:
+    include-exception: true
+    include-stacktrace: always
+    whitelabel:
+      enabled: false
+    path: /error
+  tomcat:
+    threads:
+      max: 200
+      min-spare: 200
+    connection-timeout: 3000
+    mbeanregistry:
+      enabled: true
+
+spring:
+  application:
+    name: heuron
+  web:
+    locale: ko_KR
+  messages:
+    basename: messages/messages
+    encoding: UTF-8
+  datasource:
+    url: jdbc:mysql://localhost:3306/service?allowPublicKeyRetrieval=true&allowMultiQueries=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&cacheCallableStmts=true&autoReconnect=true
+    username: root
+    password: admin!!!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+      show-sql: true
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 100MB
+upload-path: /imgs
+
+debug: false
+
+# OpenApi - Swagger
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    path: /doc/swagger-ui.html
+    enabled: true
