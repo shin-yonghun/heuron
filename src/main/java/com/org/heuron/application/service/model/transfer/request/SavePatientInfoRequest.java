@@ -11,6 +11,7 @@ import javax.validation.constraints.Pattern;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Schema(description = "환자 정보 등록 API REQUEST")
 public class SavePatientInfoRequest {
     @NotNull
     @Schema(description = "이름")

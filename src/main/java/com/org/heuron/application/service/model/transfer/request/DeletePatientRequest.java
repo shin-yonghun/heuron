@@ -10,7 +10,8 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PatientRequest {
+@Schema(description = "환자 삭제 API REQUEST")
+public class DeletePatientRequest {
     @NotNull
     @NumberFormat
     @Schema(description = "환자고유번호")

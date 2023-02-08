@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Schema(description = "환자 이미지 등록 API REQUEST")
 public class SavePatientImgRequest {
     @NotNull
     @NumberFormat

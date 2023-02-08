@@ -5,7 +5,7 @@ import com.org.heuron.application.common.model.SexCd;
 import com.org.heuron.application.common.util.ImgUtils;
 import com.org.heuron.application.service.model.entity.PatientMt;
 import com.org.heuron.application.service.model.repository.PatientMtRepository;
-import com.org.heuron.application.service.model.transfer.request.PatientRequest;
+import com.org.heuron.application.service.model.transfer.request.DeletePatientRequest;
 import com.org.heuron.application.service.model.transfer.request.SavePatientImgRequest;
 import com.org.heuron.application.service.model.transfer.request.SavePatientInfoRequest;
 import com.org.heuron.application.service.model.transfer.response.GetPatientInfoResponse;
@@ -65,7 +65,7 @@ public class ApiRestServiceImpl implements ApiRestService {
                 throw new CommonException(ErrorType.IMAGE_UPLOAD_FAILED);
             }
             info.setImgNm(imgNm);
-            return imgUtils.getFullPath(imgNm);
+            return "image uploaded";
         }).orElseThrow(() -> new CommonException(ErrorType.INVALID_PATIENT));
     }
 
@@ -109,11 +109,11 @@ public class ApiRestServiceImpl implements ApiRestService {
     }
 
     @Override
-    public String deletePatient(PatientRequest param) {
+    public String deletePatient(DeletePatientRequest param) {
         return patientMtRepository.findById(param.getPsn()).map(info -> {
             if(!info.getImgNm().equals("")) imgUtils.deleteImage(info.getImgNm());
             patientMtRepository.delete(info);
-            return "";
+            return "info deleted";
         }).orElseThrow(() -> new CommonException(ErrorType.INVALID_PATIENT));
     }
 }

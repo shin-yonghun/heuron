@@ -7,12 +7,12 @@ import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 import org.springframework.format.annotation.NumberFormat;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Data
 @Accessors(chain = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Schema(description = "환자 정보 조회 API RESPONSE")
 public class GetPatientInfoResponse {
     @Schema(description = "이름")
     String name;
