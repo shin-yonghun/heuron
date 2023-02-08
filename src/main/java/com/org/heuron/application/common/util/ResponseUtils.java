@@ -16,6 +16,6 @@ public class ResponseUtils {
     }
 
     public static <T> ResponseBase onError(ErrorType type) {
-        return ResponseBase.of(type.SUCCESS.getCode(), type.getMessage(), null);
+        return ResponseBase.of(type.getCode(), type.getMessage(), null);
     }
 }

@@ -2,7 +2,7 @@ package com.org.heuron.application.service.service.Impl;
 
 import com.org.heuron.application.common.model.DiseaseCd;
 import com.org.heuron.application.common.model.SexCd;
-import com.org.heuron.application.service.ImgUtils;
+import com.org.heuron.application.common.util.ImgUtils;
 import com.org.heuron.application.service.model.entity.PatientMt;
 import com.org.heuron.application.service.model.repository.PatientMtRepository;
 import com.org.heuron.application.service.model.transfer.request.PatientRequest;
@@ -78,31 +78,34 @@ public class ApiRestServiceImpl implements ApiRestService {
             res.setAge(info.getAge());
             res.setSex(SexCd.fromCode(info.getSex()).getText());
             res.setDisease(DiseaseCd.fromCode(info.getDisease()).getText());
-            res.setImg(req.getRequestURL().toString().replace("patient_info","patient_img"));
+
+            String img_url = req.getRequestURL().toString().replace("patient_info","patient_img");
+            img_url = img_url.substring(0,img_url.lastIndexOf('/')+1);
+
+            res.setImg(img_url + info.getImgNm());
             return res;
         }).orElseThrow(() -> new CommonException(ErrorType.INVALID_PATIENT));
     }
 
     @Override
-    public ResponseEntity<Resource> getPatientImg(Long param) {
-        return patientMtRepository.findById(param).map(info -> {
-            if(info.getImgNm().equals("")) throw new CommonException(ErrorType.NO_IMAGE);
+    public ResponseEntity<Resource> getPatientImg(String param) {
+        String imageRoot = imgUtils.getFullPath(param);
+        Resource resource = new FileSystemResource(imageRoot);
 
-            String imageRoot = imgUtils.getFullPath(info.getImgNm());
-            Resource resource = new FileSystemResource(imageRoot);
-            HttpHeaders header = new HttpHeaders();
-            Path filePath = null;
-            try {
-                filePath = Paths.get(imageRoot);
-                // 인풋으로 들어온 파일명 .png / .jpg 에 맞게 헤더 타입 설정
-                header.add("Content-Type", Files.probeContentType(filePath));
-            }
-            catch (Exception e){
-                e.printStackTrace();
-            }
+        if(!resource.exists()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-            return new ResponseEntity<>(resource,header, HttpStatus.OK);
-        }).orElseThrow(() -> new CommonException(ErrorType.INVALID_PATIENT));
+        HttpHeaders header = new HttpHeaders();
+        Path filePath = null;
+        try {
+            filePath = Paths.get(imageRoot);
+            // 인풋으로 들어온 파일명 .png / .jpg 에 맞게 헤더 타입 설정
+            header.add("Content-Type", Files.probeContentType(filePath));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return new ResponseEntity<>(resource,header, HttpStatus.OK);
     }
 
     @Override

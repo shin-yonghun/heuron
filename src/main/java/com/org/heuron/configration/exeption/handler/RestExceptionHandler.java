@@ -41,4 +41,5 @@ public class RestExceptionHandler {
         log.error("Bind Exception: {} ", ex.getMessage());
         return ResponseBase.of(ErrorType.INVALID_PARAM.getCode(), ErrorType.INVALID_PARAM.getMessage(), null);
     }
+
 }

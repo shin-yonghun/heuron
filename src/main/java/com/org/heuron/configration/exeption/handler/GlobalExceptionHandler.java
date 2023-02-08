@@ -2,6 +2,7 @@ package com.org.heuron.configration.exeption.handler;
 
 import com.org.heuron.application.common.model.ResponseBase;
 import com.org.heuron.configration.exeption.CommonException;
+import com.org.heuron.configration.exeption.type.ErrorType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -31,10 +31,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ModelAndView handleException(HttpServletRequest request, Exception ex) {
+    public ResponseBase handleException(HttpServletRequest request, Exception ex) {
         log.error("Common Exception: request: {}, error-msg: {}", request, ex.getMessage());
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("exception/unknown");
-        return mv;
+        return ResponseBase.of(ErrorType.INTERNAL_SERVER.getCode(), ErrorType.INTERNAL_SERVER.getMessage(), null);
     }
 }

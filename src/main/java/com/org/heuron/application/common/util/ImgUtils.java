@@ -1,4 +1,4 @@
-package com.org.heuron.application.service;
+package com.org.heuron.application.common.util;
 
 import com.org.heuron.configration.exeption.CommonException;
 import com.org.heuron.configration.exeption.type.ErrorType;
@@ -37,11 +37,8 @@ public class ImgUtils {
             throw new CommonException(ErrorType.INVALID_IMAGE);
         }
 
-        // 작성자가 업로드한 파일명 -> 서버 내부에서 관리하는 파일명
-        // 파일명을 중복되지 않게끔 UUID로 정하고 ".확장자"는 그대로
         String storeFilename = UUID.randomUUID() + "." + ext;
 
-        // 파일을 저장하는 부분 -> 파일경로 + storeFilename 에 저장
         multipartFile.transferTo(new File(getFullPath(storeFilename)));
 
         return storeFilename;
@@ -55,6 +52,7 @@ public class ImgUtils {
         return originalFilename.substring(pos + 1);
     }
 
+    //이미지 삭제
     public void deleteImage(String filename) {
         File file = new File(getFullPath(filename));
         if(file.exists()){

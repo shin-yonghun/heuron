@@ -1,12 +1,14 @@
 package com.org.heuron.configration.exeption.type;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
 import java.util.Arrays;
 import java.util.function.Predicate;
 
+@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PACKAGE)
 public enum ErrorType {
     UNKNOWN(-1, "unknown"),
@@ -15,11 +17,13 @@ public enum ErrorType {
     NOT_FOUND(2, "not found"),
     INVALID_PARAM(3, "invalid parameters"),
     INTERNAL_SERVER(4, "Internal server error"),
+    INVALID_PERMISSION(5, "invalid permission"),
+    INVALID_REQUEST(6, "invalid request"),
 
-    NO_IMAGE(5,"no image"),
-    INVALID_IMAGE(6,"invalid image type"),
-    IMAGE_UPLOAD_FAILED(7,"failed upload image"),
-    INVALID_PATIENT(8,"invalid_patient");
+    NO_IMAGE(11,"no image"),
+    INVALID_IMAGE(12,"invalid image type"),
+    IMAGE_UPLOAD_FAILED(13,"failed upload image"),
+    INVALID_PATIENT(14,"invalid_patient");
 
 
     @Getter
@@ -27,11 +31,6 @@ public enum ErrorType {
 
     @Getter
     String message;
-
-    ErrorType(Integer code, String message) {
-        this.code = code;
-        this.message = message;
-    }
 
     private static ErrorType find(Predicate<ErrorType> predicate) {
         return Arrays.stream(values())

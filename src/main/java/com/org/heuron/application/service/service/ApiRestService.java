@@ -14,6 +14,6 @@ public interface ApiRestService {
     Long savePatientInfo(SavePatientInfoRequest param);
     String savePatientImg(SavePatientImgRequest param);
     GetPatientInfoResponse getPatientInfo(HttpServletRequest req, Long param);
-    ResponseEntity<Resource> getPatientImg(Long param);
+    ResponseEntity<Resource> getPatientImg(String param);
     String deletePatient(PatientRequest param);
 }
